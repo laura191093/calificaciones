@@ -1,0 +1,220 @@
+﻿<!DOCTYPE html-->
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css" />
+<script src="js/jquery.min.js"></script>
+<script src="js/jquery.mobile-1.4.5.min.js"></script>
+<title>Aplicacion Movil </title>
+<style type="text/css">
+#navegador ul{
+   list-style-type: none;
+   text-align: center;
+}
+#navegador li{
+   display: inline;
+   text-align: center;
+   margin: 0 10px 0 0;
+}
+#navegador li a {
+   padding: 2px 7px 2px 7px;
+   color: #666;
+   background-color: #eeeeee;
+   border: 1px solid #ccc;
+   text-decoration: none;
+}
+#navegador li a:hover{
+   background-color: #333333;
+   color: #ffffff;
+}
+  </style>
+  <script>
+          $(document).ready(function inicio(){
+    // 
+     var btnEnvio=$("#enviar");
+     btnEnvio.click(function enviarDatos(){
+         var ma=$("#Matricula").val();
+          var p1=$("#Parcial1").val();
+           var p2=$("#Parcial2").val();
+           var p3=$("#Parcial3").val();
+           var p4=$("#Parcial4").val();
+           var pro=$("#Promedio").val();
+           
+      $.ajax({
+          type:"POST",
+          url:"http://laura1910933.260mb.net/calificacionregistrada.php",
+          data:"Matricula="+ma+"&Parcial1="+p1+"&Parcial2="+p2+"&Parcial3="+p3+"&Parcial4="+p4+"&Promedio="+pro,
+          success:recepcion
+      });
+     });
+     function recepcion(datos){
+      //   alert("listo:"+datos);
+         var resp=$("#respuesta");
+         resp.html(datos);
+     }
+     
+     
+     var btnSumar=$("#suma");
+btnSumar.click(function suma(){
+var n1=parseInt($("#Parcial1").val());
+var n2=parseInt($("#Parcial2").val());
+var n3=parseInt($("#Parcial3").val());
+var n4=parseInt($("#Parcial4").val());
+var result=(n1+n2+n3+n4)/4;
+var r=$("#Promedio");
+r.val(result);
+});
+     
+     
+     
+     
+     var btnEnvio2=$("#enviar2");
+     btnEnvio2.click(function enviarDatos2(){         
+         var nom=$("#Nombre").val();
+          var app=$("#ApellidoPaterno").val();
+           var apm=$("#ApellidoMaterno").val();
+           var ma2=$("#Matricula2").val();
+           alert("valor de matricula:"+ma2);
+           var CURP=$("#CURP").val();
+           var ca=$("#Carrera").val();
+           var se=$("#Semestre").val();
+           var gr=$("#Grupo").val();
+           
+      $.ajax({
+          type:"POST",
+          url:"http://laura1910933.260mb.net/AlumnoRegistrado.php",
+          data:"Nombre="+nom+"&ApellidoPaterno="+app+"&ApellidoMaterno="+apm+"&Matricula2="+ma2+"&CURP="+CURP+"&Carrera="+ca+"&Semestre="+se+"&Grupo="+gr,
+          success:recepcion2
+      });
+     });
+     function recepcion2(datos){
+      //   alert("listo:"+datos);
+         var resp2=$("#respuesta2");
+         resp2.html(datos);
+     }
+    });
+    
+  </script>
+
+
+</head>
+<body>
+<div data-role="page" id="Principal" data-theme="a">
+    <div data-role="header">
+        <p style="text-align:center">Inicio</p>
+    </div>
+    <div data-role="Content">
+        
+        
+           <div id="navegador">
+            <ul>
+            <li><a href="#Tercera">Registrar Alumno</a></li>
+            <li><a href="#Segunda">Registrar Calificación</a></li>
+            </ul>
+            </div>
+                   
+        </div>
+    <div data-role="footer">
+        <p style="text-align:center;font-size: 15px;">Laura Velazquez Morelos</p>
+    </div>
+</div>
+
+    
+<div data-role="page" id="Segunda" data-theme="a">
+    <div data-role="header">
+        <p style="text-align:center">Captura Calificaciones</p>
+    </div>
+    <div data-role="Content">
+        
+        <form method="POST" action="calificacionregistrada.php">
+            <div class="ui-field-contain">
+                 <label for="Matricula">Matricula: </label>
+                <input type="text" value="" name="Matricula" id='Matricula'/><br><br>
+                <label for="Parcial1">Parcial 1: </label>
+                <input type="text" value="" name="Parcial1" id='Parcial1'/> <br>
+                <label for="Parcial2">Parcial 2: </label>
+                <input type="text" value="" name="Parcial2" id='Parcial2'/><br>
+                <label for="Parcial3">Parcial 3: </label>
+                <input type="text" value="" name="Parcial3" id='Parcial3'/><br>
+                <label for="Parcial4">Parcial 4: </label>
+                <input type="text" value="" name="Parcial4" id='Parcial4'/><br>
+                <label for="Promedio">Promedio: </label>
+                <input type="text" value="" name="Promedio" id="Promedio"/><br>
+
+                <input type="button" value="Promedio" id="suma"/>
+               
+            </div>
+            <input type="button"name="enviar" id="enviar" value="Enviar">
+            <div id="navegador">
+            <ul>
+            <li><a href="#Tercera">Registrar Alumno</a></li>
+            <li><a href="#Principal">Inicio</a></li>
+            </ul>
+            </div>
+        </form>
+        <div id="respuesta">
+            
+        </div>
+ 
+    </div>
+    
+</div>    
+ 
+ 
+ <div data-role="page" id="Tercera" data-theme="a">
+    <div data-role="header">
+        <p style="text-align:center">Captura de Alumno</p>
+    </div>
+    <div data-role="Content">
+        
+        <form method="POST" action="AlumnoRegistrado.php">
+            
+    <label for="Nombre">Nombre: </label>
+    <input type="text" value="" name="Nombre" id='Nombre'/><br>
+
+    <label for="ApellidoPaterno">Apellido Paterno: </label>
+    <input type="text" name="ApellidoPaterno" id='ApellidoPaterno'/><br>
+    
+    <label for="ApellidoMaterno">Apellido Materno: </label>
+    <input type="text" name="ApellidoMaterno" id='ApellidoMaterno'/><br>
+    
+    <label for="Matricula2">Matricula: </label>
+    <input type="text" value="" name="Matricula2" id='Matricula2'/><br>
+
+    <label for="CURP">CURP: </label>
+    <input type="text" value="" name="CURP" id='CURP' /><br>
+
+     Carrera <select name="Carrera" id='Carrera'>
+        <option>Sistemas Computacionales</option>
+        <option>Electromecanica</option>
+        <option>Industrial</option>
+        <option>Industraias Alimentarias</option>
+        <option>Gestion Empresarial</option>
+        <option>Mecanica Automotriz</option>
+      </select><br/>
+
+      <label for="Semestre">Semestre: </label>
+      <input type="number"  min="1" max="9" step="1" name="Semestre" id="Semestre"/><br>
+      
+      Grupo <select name="Grupo" id="Grupo">
+        <option>A</option>
+        <option>B</option>
+        <option>C</option>
+        <option>D</option>
+      </select><br>
+            <input type="button" name="enviar2" id="enviar2" value="Enviar">
+            <div id="navegador">
+            <ul>
+            <li><a href="#Principal">Inicio</a></li>
+            <li><a href="#Segunda">Registrar Calificación</a></li>
+            </ul>
+            </div>
+            <div id="respuesta2">
+            
+        </div>
+        </form>
+        
+    </div>
+    </div>
+</body>
+</html>
